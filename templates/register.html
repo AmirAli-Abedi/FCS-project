@@ -11,15 +11,20 @@
         <header>
             <h1>User Registration</h1>
             <p class="subtitle">{{ version|title }} Implementation</p>
+            <div id="connectionStatus" class="protocol-indicator">
+                Checking connection...
+            </div>
         </header>
 
         {% if version == 'insecure' %}
         <div class="warning-box">
             <strong>⚠️ INSECURE:</strong> This form demonstrates vulnerabilities. Passwords are stored in plain text!
+            <br><small>⚠️ <strong>HTTP Connection:</strong> All data transmitted in plain text - anyone can intercept!</small>
         </div>
         {% else %}
         <div class="info-box">
             <strong>✅ SECURE:</strong> This form uses proper security practices including password hashing and encryption.
+            <br><small>🔒 <strong>HTTPS Required:</strong> Connection is encrypted - data is protected in transit.</small>
         </div>
         {% endif %}
 
@@ -97,6 +102,19 @@
                 resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
             }
         });
+        
+        // Check connection protocol
+        function updateConnectionStatus() {
+            const statusDiv = document.getElementById('connectionStatus');
+            if (window.location.protocol === 'https:') {
+                statusDiv.className = 'protocol-indicator secure-protocol';
+                statusDiv.textContent = '🔒 HTTPS Connection (Secure)';
+            } else {
+                statusDiv.className = 'protocol-indicator insecure-protocol';
+                statusDiv.textContent = '⚠️ HTTP Connection (Insecure)';
+            }
+        }
+        updateConnectionStatus();
     </script>
 </body>
 </html>

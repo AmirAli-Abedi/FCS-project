@@ -11,6 +11,15 @@
         <header>
             <h1>🔍 Database Comparison</h1>
             <p class="subtitle">Side-by-side view of insecure vs secure storage</p>
+            {% if is_https %}
+            <div class="protocol-indicator secure-protocol">
+                🔒 HTTPS Connection (Secure)
+            </div>
+            {% else %}
+            <div class="protocol-indicator insecure-protocol">
+                ⚠️ HTTP Connection (Insecure)
+            </div>
+            {% endif %}
         </header>
 
         <div class="comparison-container">

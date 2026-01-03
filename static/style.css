@@ -408,3 +408,38 @@ code {
     color: #e83e8c;
 }
 
+/* Protocol Indicators */
+.protocol-indicator {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.secure-protocol {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #28a745;
+}
+
+.insecure-protocol {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffc107;
+}
+
+.protocol-note {
+    margin: 10px 0;
+    padding: 8px;
+    background: #f8f9fa;
+    border-left: 3px solid #6c757d;
+    border-radius: 3px;
+}
+
+.protocol-note small {
+    color: #6c757d;
+    font-style: italic;
+}
+

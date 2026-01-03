@@ -9,12 +9,14 @@ Security features:
 4. Input validation and sanitization
 5. Minimal data exposure in responses
 6. Session management
+7. HTTPS enforcement (secure transmission)
 """
 import re
 import sqlite3
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, session
 from database import get_secure_db
 from encryption import strong_encrypt, strong_decrypt
+from middleware import require_https
 import bcrypt
 
 
@@ -49,11 +51,13 @@ def validate_password(password):
 
 
 @secure_bp.route('/register', methods=['GET', 'POST'])
+@require_https
 def register():
     """
     SECURE REGISTRATION ENDPOINT
     
     Security features:
+    - HTTPS enforcement (secure transmission)
     - Password hashing with bcrypt (includes salt automatically)
     - Strong AES-256 encryption for credit card
     - Input validation
@@ -123,11 +127,13 @@ def register():
 
 
 @secure_bp.route('/login', methods=['GET', 'POST'])
+@require_https
 def login():
     """
     SECURE LOGIN ENDPOINT
     
     Security features:
+    - HTTPS enforcement (secure transmission)
     - Parameterized queries (prevents SQL injection)
     - Password verification using bcrypt
     - Minimal data exposure
@@ -179,11 +185,13 @@ def login():
 
 
 @secure_bp.route('/user/<int:user_id>', methods=['GET'])
+@require_https
 def get_user(user_id):
     """
     SECURE USER DATA ENDPOINT
     
     Security features:
+    - HTTPS enforcement (secure transmission)
     - Authentication check
     - Authorization check (users can only see their own data)
     - Parameterized queries
@@ -219,11 +227,13 @@ def get_user(user_id):
 
 
 @secure_bp.route('/users', methods=['GET'])
+@require_https
 def list_users():
     """
     SECURE USER LIST ENDPOINT
     
     Security features:
+    - HTTPS enforcement (secure transmission)
     - Authentication required
     - Minimal data exposure (no passwords or credit cards)
     """
@@ -252,8 +262,9 @@ def list_users():
 
 
 @secure_bp.route('/logout', methods=['POST'])
+@require_https
 def logout():
-    """Secure logout - clears session"""
+    """Secure logout - clears session (HTTPS enforced)"""
     session.clear()
     return jsonify({'message': 'Logged out successfully'}), 200
 

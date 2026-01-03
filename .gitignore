@@ -6,4 +6,8 @@ __pycache__/
 venv/
 env/
 .venv/
+# SSL certificates (self-signed, for local dev only)
+ssl/*.pem
+ssl/*.key
+ssl/*.crt
 

@@ -11,6 +11,15 @@
         <header>
             <h1>🔒 Secure Computing Project</h1>
             <p class="subtitle">Data Disclosure and Storage Encryption Demonstration</p>
+            {% if is_https %}
+            <div class="protocol-indicator secure-protocol">
+                🔒 HTTPS Connection (Secure)
+            </div>
+            {% else %}
+            <div class="protocol-indicator insecure-protocol">
+                ⚠️ HTTP Connection (Insecure)
+            </div>
+            {% endif %}
         </header>
 
         <div class="warning-box">
@@ -28,8 +37,11 @@
                     <li>SQL injection vulnerabilities</li>
                     <li>No input validation</li>
                     <li>Exposed sensitive data</li>
-                    <li>Insecure transmission (HTTP)</li>
+                    <li><strong>Insecure transmission (HTTP)</strong> - Data sent in plain text!</li>
                 </ul>
+                <div class="protocol-note">
+                    <small>⚠️ Uses HTTP to demonstrate vulnerability</small>
+                </div>
                 <div class="button-group">
                     <a href="/insecure/register" class="btn btn-insecure">Register</a>
                     <a href="/insecure/login" class="btn btn-insecure">Login</a>
@@ -46,7 +58,11 @@
                     <li>Input validation</li>
                     <li>Minimal data exposure</li>
                     <li>Session management</li>
+                    <li><strong>HTTPS enforcement</strong> - Encrypted transmission</li>
                 </ul>
+                <div class="protocol-note">
+                    <small>🔒 Enforces HTTPS - redirects HTTP to HTTPS</small>
+                </div>
                 <div class="button-group">
                     <a href="/secure/register" class="btn btn-secure">Register</a>
                     <a href="/secure/login" class="btn btn-secure">Login</a>
