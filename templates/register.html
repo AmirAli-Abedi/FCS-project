@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - {{ version|title }} Version</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Registration</h1>
+            <p class="subtitle">{{ version|title }} Implementation</p>
+        </header>
+
+        {% if version == 'insecure' %}
+        <div class="warning-box">
+            <strong>⚠️ INSECURE:</strong> This form demonstrates vulnerabilities. Passwords are stored in plain text!
+        </div>
+        {% else %}
+        <div class="info-box">
+            <strong>✅ SECURE:</strong> This form uses proper security practices including password hashing and encryption.
+        </div>
+        {% endif %}
+
+        <div class="form-container">
+            <form id="registerForm" method="POST" action="/{{ version }}/register">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Enter username" minlength="3" maxlength="20">
+                    {% if version == 'secure' %}
+                    <small>3-20 characters, alphanumeric and underscore only</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="Enter email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter password" minlength="8">
+                    {% if version == 'secure' %}
+                    <small>Must be at least 8 characters with uppercase, lowercase, and digit</small>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="credit_card">Credit Card Number:</label>
+                    <input type="text" id="credit_card" name="credit_card" required 
+                           placeholder="1234 5678 9012 3456" maxlength="19">
+                    {% if version == 'secure' %}
+                    <small>13-19 digits (spaces/dashes will be removed)</small>
+                    {% endif %}
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="result" class="result-box" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                resultDiv.style.display = 'block';
+                
+                if (response.ok) {
+                    resultDiv.className = 'result-box success';
+                    resultDiv.innerHTML = `<strong>Success!</strong> ${data.message}<br>User ID: ${data.user_id}`;
+                    this.reset();
+                } else {
+                    resultDiv.className = 'result-box error';
+                    resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result-box error';
+                resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
+

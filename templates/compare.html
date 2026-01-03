@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Database Comparison</h1>
+            <p class="subtitle">Side-by-side view of insecure vs secure storage</p>
+        </header>
+
+        <div class="comparison-container">
+            <div class="comparison-column insecure-column">
+                <h2>🚨 Insecure Database</h2>
+                <div class="warning-box">
+                    <strong>Vulnerabilities:</strong> Plain text passwords, weak encryption
+                </div>
+                
+                {% if insecure_users %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Credit Card</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in insecure_users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td class="vulnerable">{{ user.password }}</td>
+                            <td class="vulnerable">{{ user.credit_card }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="no-data">No users in insecure database yet.</p>
+                {% endif %}
+            </div>
+
+            <div class="comparison-column secure-column">
+                <h2>✅ Secure Database</h2>
+                <div class="info-box">
+                    <strong>Security:</strong> Hashed passwords, encrypted credit cards
+                </div>
+                
+                {% if secure_users %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Password Hash</th>
+                            <th>Encrypted Card</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in secure_users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td class="secure">{{ user.password_hash[:50] }}...</td>
+                            <td class="secure">{{ user.credit_card_encrypted[:50] }}...</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="no-data">No users in secure database yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="key-differences">
+            <h3>Key Differences:</h3>
+            <ul>
+                <li><strong>Insecure:</strong> Passwords stored in plain text - anyone can read them!</li>
+                <li><strong>Secure:</strong> Passwords hashed with bcrypt - cannot be reversed</li>
+                <li><strong>Insecure:</strong> Credit cards "encrypted" with base64 (just encoding, not encryption)</li>
+                <li><strong>Secure:</strong> Credit cards encrypted with AES-256 - requires key to decrypt</li>
+                <li><strong>Insecure:</strong> All data visible in database</li>
+                <li><strong>Secure:</strong> Sensitive data properly protected</li>
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
+

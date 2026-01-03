@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Computing Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Secure Computing Project</h1>
+            <p class="subtitle">Data Disclosure and Storage Encryption Demonstration</p>
+        </header>
+
+        <div class="warning-box">
+            <strong>⚠️ Educational Purpose Only:</strong> This project demonstrates security vulnerabilities and their solutions. 
+            <strong>DO NOT use the insecure implementation in production!</strong>
+        </div>
+
+        <div class="content-grid">
+            <div class="card insecure-card">
+                <h2>🚨 Insecure Implementation</h2>
+                <p class="card-description">Demonstrates common security vulnerabilities:</p>
+                <ul class="vulnerability-list">
+                    <li>Plain text password storage</li>
+                    <li>Weak encryption (base64)</li>
+                    <li>SQL injection vulnerabilities</li>
+                    <li>No input validation</li>
+                    <li>Exposed sensitive data</li>
+                    <li>Insecure transmission (HTTP)</li>
+                </ul>
+                <div class="button-group">
+                    <a href="/insecure/register" class="btn btn-insecure">Register</a>
+                    <a href="/insecure/login" class="btn btn-insecure">Login</a>
+                </div>
+            </div>
+
+            <div class="card secure-card">
+                <h2>✅ Secure Implementation</h2>
+                <p class="card-description">Proper security practices:</p>
+                <ul class="security-list">
+                    <li>Password hashing (bcrypt)</li>
+                    <li>Strong encryption (AES-256)</li>
+                    <li>Parameterized queries</li>
+                    <li>Input validation</li>
+                    <li>Minimal data exposure</li>
+                    <li>Session management</li>
+                </ul>
+                <div class="button-group">
+                    <a href="/secure/register" class="btn btn-secure">Register</a>
+                    <a href="/secure/login" class="btn btn-secure">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <a href="/compare" class="btn btn-compare">🔍 Compare Database Contents</a>
+        </div>
+
+        <footer>
+            <p>Fundamentals of Secure Computing - Educational Project</p>
+        </footer>
+    </div>
+</body>
+</html>
+
