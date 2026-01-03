@@ -89,7 +89,8 @@ def login():
     
     # VULNERABILITY: SQL Injection - Direct string concatenation!
     # This allows attackers to inject SQL code
-    # Example: username = "admin' OR '1'='1" would bypass authentication
+    # Example: username = "admin' OR '1'='1' --" would bypass authentication
+    # The -- comments out the password check, making the query always return true
     query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
     
     conn = get_insecure_db()
