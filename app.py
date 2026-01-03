@@ -155,6 +155,27 @@ def api_secure_users():
     return jsonify({"users": user_list})
 
 
+@app.route("/debug/https")
+def debug_https():
+    """Debug endpoint to check HTTPS detection"""
+    return jsonify(
+        {
+            "request.scheme": request.scheme,
+            "request.is_secure": request.is_secure,
+            "wsgi.url_scheme": request.environ.get("wsgi.url_scheme", "unknown"),
+            "HTTPS header": request.environ.get("HTTPS", "unknown"),
+            "X-Forwarded-Proto": request.headers.get("X-Forwarded-Proto"),
+            "request.url": request.url,
+            "request.host": request.host,
+            "SSL enabled": get_ssl_context() is not None,
+            "files exist": {
+                "cert.pem": os.path.exists("ssl/cert.pem"),
+                "key.pem": os.path.exists("ssl/key.pem"),
+            },
+        }
+    )
+
+
 if __name__ == "__main__":
     # Initialize databases on startup
     print("Initializing databases...")
@@ -187,6 +208,8 @@ if __name__ == "__main__":
         print("\n" + "=" * 60)
         # Run with SSL support - ONLY accepts HTTPS connections
         # All requests will be HTTPS - logs will show HTTPS
+        # Configure Flask to properly detect HTTPS
+        app.config["PREFERRED_URL_SCHEME"] = "https"
         app.run(debug=True, host="0.0.0.0", port=5000, ssl_context=ssl_context)
     else:
         print("[WARNING] SSL certificates not found - HTTPS disabled")

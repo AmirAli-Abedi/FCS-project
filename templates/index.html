@@ -64,8 +64,13 @@
                     <small>🔒 Enforces HTTPS - redirects HTTP to HTTPS</small>
                 </div>
                 <div class="button-group">
-                    <a href="/secure/register" class="btn btn-secure">Register</a>
-                    <a href="/secure/login" class="btn btn-secure">Login</a>
+                    {% if is_https %}
+                    <a href="https://{{ request.host }}/secure/register" class="btn btn-secure">Register</a>
+                    <a href="https://{{ request.host }}/secure/login" class="btn btn-secure">Login</a>
+                    {% else %}
+                    <a href="https://localhost:5000/secure/register" class="btn btn-secure">Register</a>
+                    <a href="https://localhost:5000/secure/login" class="btn btn-secure">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
