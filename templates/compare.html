@@ -46,8 +46,8 @@
                             <td>{{ user.id }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
-                            <td class="vulnerable">{{ user.password }}</td>
-                            <td class="vulnerable">{{ user.credit_card }}</td>
+                            <td class="vulnerable">{{ user.password[:10] }}...</td>
+                            <td class="vulnerable">{{ user.credit_card[:10] }}...</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -80,8 +80,8 @@
                             <td>{{ user.id }}</td>
                             <td>{{ user.username }}</td>
                             <td>{{ user.email }}</td>
-                            <td class="secure">{{ user.password_hash[:50] }}...</td>
-                            <td class="secure">{{ user.credit_card_encrypted[:50] }}...</td>
+                            <td class="secure">{{ user.password_hash[:10] }}...</td>
+                            <td class="secure">{{ user.credit_card_encrypted[:10] }}...</td>
                         </tr>
                         {% endfor %}
                     </tbody>
